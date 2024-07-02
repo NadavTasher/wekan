@@ -152,7 +152,7 @@ Mousetrap.bind('space', evt => {
 
   if (ReactiveCache.getCurrentUser().isBoardMember()) {
     const card = ReactiveCache.getCard(cardId);
-    card.toggleMember(currentUserId);
+    card.toggleAssignee(currentUserId);
     // We should prevent scrolling in card when spacebar is clicked
     // This should do it according to Mousetrap docs, but it doesn't
     evt.preventDefault();
