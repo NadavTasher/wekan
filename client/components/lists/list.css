@@ -11,6 +11,10 @@
 [id^="swimlane-"] .list:first-child {
   min-width: 20px;
 }
+.list-body::-webkit-scrollbar {
+  /* Hide scroll bars from middle of the screen */
+  display: none !important;
+}
 .list:first-child {
   border-left: none;
 }
