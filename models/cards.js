@@ -3084,6 +3084,13 @@ if (Meteor.isServer) {
   });
 
   Cards.after.insert((userId, doc) => {
+    // Create new default checklist
+    const checklistId = Checklists.insert({
+      title: 'To-Do',
+      cardId: doc._id,
+      sort: 0,
+    });
+
     cardCreation(userId, doc);
   });
   // New activity for card (un)archivage
