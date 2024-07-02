@@ -7,6 +7,23 @@
   border-left: 1px solid #ccc;
   padding: 0;
   float: left;
+
+  /* Always try to auto-fit */
+  width: 100%;
+
+  /* Allow the list-addition column to grow */
+  min-width: min-content;
+
+  /* Deny any list from growing beyond 50% */
+  max-width: 50vw;
+
+  /* min-width: 100px; TODO(mark-i-m): hardcoded? */
+  /*max-width: 270px;*/
+  /* Reverted incomplete change list width: */
+  /* https://github.com/wekan/wekan/issues/4558 */
+  /* Orinal width: 270px. Changes not saved yet: */
+  /*resize: both;  - List width and height resizeable */
+  /* overflow: auto; - List width and height resizeable */
 }
 [id^="swimlane-"] .list:first-child {
   min-width: 20px;
@@ -16,6 +33,10 @@
   display: none !important;
 }
 .list:first-child {
+  /* Deny first list (addition column) from growing */
+  max-width: fit-content;
+
+  margin-left: 5px;
   border-left: none;
 }
 .card-details + .list {

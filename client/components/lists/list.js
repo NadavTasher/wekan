@@ -194,12 +194,6 @@ BlazeComponent.extendComponent({
       });
     });
   },
-
-  listWidth() {
-    const user = ReactiveCache.getCurrentUser();
-    const list = Template.currentData();
-    return user.getListWidth(list.boardId, list._id);
-  },
 }).register('list');
 
 Template.miniList.events({

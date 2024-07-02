@@ -168,7 +168,6 @@ Template.listActionPopup.events({
     });
     Popup.back();
   },
-  'click .js-set-list-width': Popup.open('setListWidth'),
   'click .js-set-color-list': Popup.open('setListColor'),
   'click .js-select-cards'() {
     const cardIds = this.allCards().map(card => card._id);
@@ -336,41 +335,3 @@ BlazeComponent.extendComponent({
     ];
   },
 }).register('setListColorPopup');
-
-BlazeComponent.extendComponent({
-  applyListWidth() {
-    const list = Template.currentData();
-    const board = list.boardId;
-    const width = parseInt(
-      Template.instance()
-        .$('.list-width-value')
-        .val(),
-      10,
-    );
-
-    // FIXME(mark-i-m): where do we put constants?
-    if (width < 100 || !width) {
-      Template.instance()
-        .$('.list-width-error')
-        .click();
-    } else {
-      Meteor.call('applyListWidth', board, list._id, width);
-      Popup.back();
-    }
-  },
-
-  listWidthValue() {
-    const list = Template.currentData();
-    const board = list.boardId;
-    return ReactiveCache.getCurrentUser().getListWidth(board, list._id);
-  },
-
-  events() {
-    return [
-      {
-        'click .list-width-apply': this.applyListWidth,
-        'click .list-width-error': Popup.open('listWidthError'),
-      },
-    ];
-  },
-}).register('setListWidthPopup');
