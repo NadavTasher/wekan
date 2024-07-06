@@ -39,27 +39,6 @@ template(name="filterSidebar")
             i.fa.fa-check
   hr
   h3
-    i.fa.fa-users
-    | {{_ 'filter-member-label'}}
-  ul.sidebar-list
-    li(class="{{#if Filter.members.isSelected undefined}}active{{/if}}")
-          a.name.js-toggle-member-filter
-            span.sidebar-list-item-description
-              | {{_ 'filter-no-member'}}
-            if Filter.members.isSelected undefined
-              i.fa.fa-check
-    each currentBoard.activeMembers
-      with getUser userId
-        li(class="{{#if Filter.members.isSelected _id}}active{{/if}}")
-          a.name.js-toggle-member-filter
-            +userAvatar(userId=this._id)
-            span.sidebar-list-item-description
-              = profile.fullname
-              | (<span class="username">{{ username }}</span>)
-            if Filter.members.isSelected _id
-              i.fa.fa-check
-  hr
-  h3
     i.fa.fa-user
     | {{_ 'filter-assignee-label'}}
   ul.sidebar-list
