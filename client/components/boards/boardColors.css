@@ -2307,7 +2307,6 @@
   font-size: 18px;
   font-weight: 500;
   line-height: 24px;
-  text-align: left;
   color: rgba(255, 255, 255, 1);
 }
 
@@ -2432,7 +2431,6 @@
   font-size: 18px;
   font-weight: 400;
   line-height: 24px;
-  text-align: left;
   padding: 12px;
 }
 
@@ -2517,7 +2515,6 @@
   font-size: 18px;
   font-weight: 400;
   line-height: 24px;
-  text-align: left;
   color: rgba(255, 255, 255, 0.5);
 }
 
@@ -2527,7 +2524,6 @@
   font-size: 24px;
   font-weight: 600;
   line-height: 28px;
-  text-align: left;
   border-bottom: none !important;
 }
 
@@ -2588,7 +2584,6 @@
   font-size: 18px;
   font-weight: 400;
   line-height: 24px;
-  text-align: left;
   color: rgba(255, 255, 255, 0.85);
 }
 
@@ -2656,7 +2651,6 @@
   font-size: 16px;
   font-weight: 500;
   line-height: 24px;
-  text-align: left;
 
   color: rgba(255, 255, 255, 0.85);
 }
@@ -2665,7 +2659,6 @@
   font-size: 16px;
   font-weight: 400;
   line-height: 24px;
-  text-align: left;
 
   color: rgba(255, 255, 255, 0.7);
 }
@@ -2718,7 +2711,6 @@
   font-size: 18px;
   font-weight: 400;
   line-height: 24px;
-  text-align: left;
   color: rgba(255, 255, 255, 0.5);
 }
 
@@ -2739,7 +2731,6 @@
   font-size: 16px;
   font-weight: 400;
   line-height: 24px;
-  text-align: left;
   border-radius: 12px;
   padding: 6px 12px 6px 12px;
   background: #FFFFFF;
@@ -2750,7 +2741,6 @@
   font-size: 18px;
   font-weight: 400;
   line-height: 24px;
-  text-align: left;
   color: rgba(255, 255, 255, 1);
   background: rgba(57, 57, 71, 1) !important;
   border: none !important;
@@ -2778,7 +2768,6 @@
   font-size: 18px;
   font-weight: 400;
   line-height: 24px;
-  text-align: left;
   color: rgba(255, 255, 255, 0.85) !important;
   background: rgba(57, 57, 71, 1) !important;
   border-radius: 12px !important;
@@ -2793,7 +2782,6 @@
   font-size: 18px;
   font-weight: 400;
   line-height: 24px;
-  text-align: left;
   color: rgba(255, 255, 255, 0.85);
   background: rgba(57, 57, 71, 1);
   border-radius: 12px;
@@ -2808,7 +2796,6 @@
   font-size: 16px;
   font-weight: 400;
   line-height: 24px;
-  text-align: left;
   color: rgba(10, 10, 20, 0.85);
 }
 
@@ -2824,7 +2811,6 @@
   font-size: 16px;
   font-weight: 400;
   line-height: 24px;
-  text-align: left;
   color: #FFFFFF;
 }
 
@@ -2991,7 +2977,6 @@
   font-size: 18px;
   font-weight: 500;
   line-height: 24px;
-  text-align: left;
   color: rgba(10, 10, 20, 1);
 }
 
@@ -3094,7 +3079,6 @@
   font-size: 16px;
   font-weight: 400;
   line-height: 24px;
-  text-align: left;
   color: rgba(10, 10, 20, 0.85);
   background: rgba(234, 234, 237, 1);
 }
@@ -3117,7 +3101,6 @@
   font-size: 18px;
   font-weight: 400;
   line-height: 24px;
-  text-align: left;
   padding: 12px;
 }
 
@@ -3131,7 +3114,6 @@
   font-size: 16px;
   font-weight: 400;
   line-height: 24px;
-  text-align: left;
   margin-bottom: 10px;
 }
 
@@ -3142,7 +3124,6 @@
   font-size: 16px;
   font-weight: 400;
   line-height: 24px;
-  text-align: left;
   color: rgba(255, 255, 255, 1);
 }
 
@@ -3207,7 +3188,6 @@
   font-size: 18px;
   font-weight: 400;
   line-height: 24px;
-  text-align: left;
   color: rgba(10, 10, 20, 0.5);
 }
 
@@ -3217,7 +3197,6 @@
   font-size: 24px;
   font-weight: 600;
   line-height: 28px;
-  text-align: left;
   border-bottom: none !important;
 }
 
@@ -3266,7 +3245,6 @@
   font-size: 18px;
   font-weight: 500;
   line-height: 24px;
-  text-align: left;
   color: rgba(10, 10, 20, 1);
 }
 
@@ -3278,7 +3256,6 @@
   font-size: 18px;
   font-weight: 400;
   line-height: 24px;
-  text-align: left;
   color: rgba(10, 10, 20, 0.5);
 }
 
@@ -3347,7 +3324,6 @@
   font-size: 16px;
   font-weight: 500;
   line-height: 24px;
-  text-align: left;
 
   color: rgba(10, 10, 20, 0.85) !important;
 }
@@ -3356,7 +3332,6 @@
   font-size: 16px;
   font-weight: 400;
   line-height: 24px;
-  text-align: left;
 
   color: rgba(10, 10, 20, 0.5) !important;
 }
@@ -3415,7 +3390,6 @@
   font-size: 18px;
   font-weight: 400;
   line-height: 24px;
-  text-align: left;
   color: rgba(10, 10, 20, 0.5);
 }
 
@@ -3436,7 +3410,6 @@
   font-size: 16px;
   font-weight: 400;
   line-height: 24px;
-  text-align: left;
   border-radius: 12px;
   padding: 6px 12px 6px 12px;
   background: rgba(23, 23, 28, 1);
@@ -3447,7 +3420,6 @@
   font-size: 16px;
   font-weight: 400;
   line-height: 24px;
-  text-align: left;
   border-radius: 12px;
   padding: 6px 12px 6px 12px;
   background: rgba(23, 23, 28, 1) !important;
@@ -3462,7 +3434,6 @@
   font-size: 18px;
   font-weight: 400;
   line-height: 24px;
-  text-align: left;
   color: rgba(10, 10, 20, 0.85);
   background: rgba(234, 234, 237, 1);
   border: none !important;
@@ -3490,7 +3461,6 @@
   font-size: 18px;
   font-weight: 400;
   line-height: 24px;
-  text-align: left;
   color: rgba(10, 10, 20, 0.85) !important;
   background: rgba(234, 234, 237, 1) !important;
   border-radius: 12px !important;
@@ -3505,7 +3475,6 @@
   font-size: 18px;
   font-weight: 400;
   line-height: 24px;
-  text-align: left;
   color: rgba(10, 10, 20, 0.85);
   background: rgba(234, 234, 237, 1);
   border-radius: 12px;
@@ -3520,7 +3489,6 @@
   font-size: 16px;
   font-weight: 400;
   line-height: 24px;
-  text-align: left;
   color: rgba(255, 255, 255, 0.85);
 }
 
@@ -3536,7 +3504,6 @@
   font-size: 16px;
   font-weight: 400;
   line-height: 24px;
-  text-align: left;
   color: #FFFFFF;
 }
 
