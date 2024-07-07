@@ -111,6 +111,7 @@
 .board-sidebar {
   display: none;
   width: 30vw;
+  z-index: 100;
   transition: top 0.1s, right 0.1s, width 0.1s;
 }
 .board-sidebar.is-open {
