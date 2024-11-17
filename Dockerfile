@@ -1,54 +1,53 @@
-FROM node:18-slim AS build
+FROM node:22 AS build
 
 # Create the builder user
 RUN useradd --user-group --system --create-home builder
 
-# To disable interactive installations using apt and dpkg.
-ENV DEBIAN_FRONTEND=noninteractive
-
 # Install generic build dependencies
 RUN apt update && \
-    apt -y install apt-utils gnupg gosu wget bzip2 g++ curl libarchive-tools build-essential git ca-certificates python3 libstdc++6 && \
+    DEBIAN_FRONTEND=noninteractive apt -y install gnupg bzip2 g++ libarchive-tools build-essential libstdc++6 && \
     rm -r /var/lib/apt/lists
-
-
-# Enter temporary working directory
-WORKDIR /tmp
-
-# Copy just the packages.json
-COPY package.json package.json
-COPY package-lock.json package-lock.json
-
-# Change ownership of all files
-RUN chown -R builder:builder .
 
 # Change to builder user to install dependencies
 USER builder
 
-# Install all dependencies
-RUN npm install --production
-
-# Meteor environment variables
-ENV METEOR_RELEASE=METEOR@2.14 \
-    USE_EDGE=false \
-    ARCHITECTURE=linux-x64
-
 # Install meteor dependency
-RUN curl https://install.meteor.com/ | /bin/sh
+RUN METEOR_RELEASE=METEOR@2.14 USE_EDGE=false curl https://install.meteor.com/ | /bin/sh
 
-# Install meteor as the builder user
+# Enter temporary working directory
+WORKDIR /home/builder
+
+# Copy just the packages.json
+COPY package.json package.json
+# COPY package-lock.json package-lock.json
+
+# Install all dependencies
 RUN ~/.meteor/meteor npm install --production
 
+RUN sed -i 's/api\.versionsFrom/\/\/api.versionsFrom/' /home/builder/packages/*/package.js
+
+# # Change ownership of all files
+# RUN chown -R builder:builder .
+
+
+
+# # Meteor environment variables
+# ENV METEOR_RELEASE=METEOR@2.14 \
+#     USE_EDGE=false \
+#     ARCHITECTURE=linux-x64
+
+
+# Install meteor as the builder user
+
 # Copy application sources
-COPY . .
+COPY . /tmp
 
-# Change to root user to change the sources ownership
+# Change to temporary working directory
+WORKDIR /tmp
+
+# Change to root user for chown
 USER root
-
-# Change resource ownership
 RUN chown -R builder:builder .
-
-# Change to builder user to finish building
 USER builder
 
 # Build the application using meteor
@@ -65,7 +64,7 @@ RUN node node_modules/fibers/build.js
 RUN rm -rf /build/bundle/programs/web.browser.legacy
 
 # Create a new build stage that will only contain the required files
-FROM node:18-slim
+FROM node:22-alpine
 
 # Build arguments
 ARG PORT=8080
@@ -216,10 +215,6 @@ LABEL maintainer="wekan"
 LABEL org.opencontainers.image.ref.name="node"
 LABEL org.opencontainers.image.version="23.1.0"
 LABEL org.opencontainers.image.source="https://github.com/wekan/wekan"
-
-# Create the wekan user
-
-USER wekan
 
 
 COPY --from=build /build/bundle /build
