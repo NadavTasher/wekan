@@ -33,6 +33,9 @@
   box-shadow: none;
   height: 100px;
 }
+.list.list-collapsed {
+  flex: none;
+}
 .list.list-composer .open-list-composer,
 .list .list-composer .open-list-composer {
   color: #8c8c8c;
