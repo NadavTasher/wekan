@@ -1,64 +1,31 @@
 FROM node:22 AS build
 
-# Create the builder user
-RUN useradd --user-group --system --create-home builder
-
 # Install generic build dependencies
 RUN apt update && \
     DEBIAN_FRONTEND=noninteractive apt -y install gnupg bzip2 g++ libarchive-tools build-essential libstdc++6 && \
     rm -r /var/lib/apt/lists
 
-# Change to builder user to install dependencies
-USER builder
-
 # Install meteor dependency
-RUN METEOR_RELEASE=METEOR@2.14 USE_EDGE=false curl https://install.meteor.com/ | /bin/sh
+RUN METEOR_RELEASE=METEOR@2.16 USE_EDGE=false curl https://install.meteor.com/ | /bin/sh
 
-# Enter temporary working directory
-WORKDIR /home/builder
+# Change to source directory
+WORKDIR /src
 
 # Copy just the packages.json
 COPY package.json package.json
 # COPY package-lock.json package-lock.json
 
 # Install all dependencies
-RUN ~/.meteor/meteor npm install --production
-
-RUN sed -i 's/api\.versionsFrom/\/\/api.versionsFrom/' /home/builder/packages/*/package.js
-
-# # Change ownership of all files
-# RUN chown -R builder:builder .
-
-
-
-# # Meteor environment variables
-# ENV METEOR_RELEASE=METEOR@2.14 \
-#     USE_EDGE=false \
-#     ARCHITECTURE=linux-x64
-
-
-# Install meteor as the builder user
+RUN meteor npm install -g --omit=dev
 
 # Copy application sources
-COPY . /tmp
-
-# Change to temporary working directory
-WORKDIR /tmp
-
-# Change to root user for chown
-USER root
-RUN chown -R builder:builder .
-USER builder
+COPY . .
 
 # Build the application using meteor
-RUN ~/.meteor/meteor build --directory ~/build
+RUN meteor build --directory /build
 
 # Change to server build directory
 WORKDIR /build/bundle/programs/server
-
-# Install dependencies?
-RUN meteor npm install --production
-RUN node node_modules/fibers/build.js
 
 # Remove legacy webbroser bundle, so that Wekan works also at Android Firefox, iOS Safari, etc.
 RUN rm -rf /build/bundle/programs/web.browser.legacy
