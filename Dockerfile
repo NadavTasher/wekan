@@ -1,4 +1,4 @@
-FROM node:22 AS build
+FROM node:14 AS build
 
 # Install generic build dependencies
 RUN apt update && \
@@ -16,13 +16,20 @@ COPY package.json package.json
 # COPY package-lock.json package-lock.json
 
 # Install all dependencies
-RUN meteor npm install -g --omit=dev
+RUN meteor npm install -g --omit=dev --allow-superuser
 
 # Copy application sources
-COPY . .
+COPY packages packages
+COPY config config
+COPY imports imports
+COPY public public
+COPY models models
+COPY client client
+COPY server server
+COPY .meteor .meteor
 
 # Build the application using meteor
-RUN meteor build --directory /build
+RUN meteor build --directory /build --allow-superuser
 
 # Change to server build directory
 WORKDIR /build/bundle/programs/server
@@ -183,7 +190,7 @@ LABEL org.opencontainers.image.ref.name="node"
 LABEL org.opencontainers.image.version="23.1.0"
 LABEL org.opencontainers.image.source="https://github.com/wekan/wekan"
 
-
+COPY --from=build /usr/local/lib/node_modules /usr/local/lib/node_modules
 COPY --from=build /build/bundle /build
 
 # Using a default port of 8080 to be able to run rootless
@@ -202,4 +209,4 @@ WORKDIR /build
 #
 # CMD ["node", "/build/main.js"]
 # CMD ["bash", "-c", "ulimit -s 65500; exec node --stack-size=65500 /build/main.js"]
-CMD ["bash", "-c", "ulimit -s 65500; exec node --stack-size=65500 --max-old-space-size=8192 /build/main.js"]
+CMD [ "main.js" ]
