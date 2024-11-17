@@ -1,16 +1,11 @@
-FROM ubuntu:24.10
-LABEL maintainer="wekan"
-LABEL org.opencontainers.image.ref.name="ubuntu"
-LABEL org.opencontainers.image.version="24.10"
-LABEL org.opencontainers.image.source="https://github.com/wekan/wekan"
+FROM ubuntu:24.04 AS build
 
-# 2022-04-25:
-# - gyp does not yet work with Ubuntu 22.04 ubuntu:rolling,
-#   so changing to 21.10. https://github.com/wekan/wekan/issues/4488
+# Target platform
+ARG TARGET=linux-x64
 
-# 2021-09-18:
-# - Above Ubuntu base image copied from Docker Hub ubuntu:hirsute-20210825
-#   to Quay to avoid Docker Hub rate limits.
+# Install NodeJS from the official archive
+ADD https://nodejs.org/download/release/v14.21.3/node-v14.21.3-${TARGET}}.tar.gz /tmp/node.tar.gz
+
 ARG DEBIAN_FRONTEND=noninteractive
 
 ENV BUILD_DEPS="apt-utils gnupg gosu wget bzip2 g++ curl libarchive-tools build-essential git ca-certificates python3"
@@ -273,4 +268,12 @@ WORKDIR /home/wekan/app
 # CMD ["node", "/build/main.js"]
 # CMD ["bash", "-c", "ulimit -s 65500; exec node --stack-size=65500 /build/main.js"]
 # CMD ["bash", "-c", "ulimit -s 65500; exec node --stack-size=65500 --max-old-space-size=8192 /build/main.js"]
+
+FROM ubuntu:24.04
+
+LABEL maintainer="wekan"
+LABEL org.opencontainers.image.ref.name="ubuntu"
+LABEL org.opencontainers.image.version="24.10"
+LABEL org.opencontainers.image.source="https://github.com/wekan/wekan"
+
 CMD ["bash", "-c", "ulimit -s 65500; exec node /build/main.js"]
