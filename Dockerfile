@@ -10,7 +10,7 @@ RUN tar xzf /tmp/meteor.tar.gz -C $HOME --no-same-owner
 
 # Install several build dependencies
 RUN apt update && \
-    apt install --yes --no-install-suggests --no-install-recommends git g++ curl && \
+    apt install --yes --no-install-suggests --no-install-recommends ssh git g++ curl && \
     rm -r /var/lib/apt/lists
 
 # Change to temporary working directory
