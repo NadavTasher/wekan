@@ -5,7 +5,7 @@ ADD https://nodejs.org/download/release/v14.21.3/node-v14.21.3-linux-x64.tar.gz 
 RUN tar xzf /tmp/node.tar.gz --strip-components=1 --keep-old-files --no-same-owner
 
 # Install meteor globally
-ADD https://static.meteor.com/packages-bootstrap/2.16/meteor-bootstrap-os.linux.x86_64.tar.gz /tmp/meteor.tar.gz
+ADD https://static.meteor.com/packages-bootstrap/3.0.4/meteor-bootstrap-os.linux.x86_64.tar.gz /tmp/meteor.tar.gz
 RUN tar xzf /tmp/meteor.tar.gz -C $HOME --no-same-owner
 
 # Update the npm version
@@ -38,6 +38,7 @@ COPY models models
 COPY public public
 
 # Build the application
+RUN $HOME/.meteor/meteor npm install -g --production
 RUN $HOME/.meteor/meteor build --directory /build --allow-superuser
 
 
