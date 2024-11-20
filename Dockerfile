@@ -8,6 +8,9 @@ RUN tar xzf /tmp/node.tar.gz --strip-components=1 --keep-old-files --no-same-own
 ADD https://static.meteor.com/packages-bootstrap/2.16/meteor-bootstrap-os.linux.x86_64.tar.gz /tmp/meteor.tar.gz
 RUN tar xzf /tmp/meteor.tar.gz -C $HOME --no-same-owner
 
+# Update the npm version
+RUN npm install -g npm@v8.19.4
+
 # Install several build dependencies
 RUN apt update && \
     apt install --yes --no-install-suggests --no-install-recommends ssh git g++ curl && \
@@ -23,6 +26,9 @@ COPY package-lock.json .
 # Install application dependencies
 RUN npm install -g --omit=dev
 
+# Copy meteor application configurations
+COPY .meteor .meteor
+
 # Copy application sources
 COPY packages packages
 COPY client client
@@ -32,7 +38,7 @@ COPY models models
 COPY public public
 
 # Build the application
-RUN $HOME/.meteor/meteor build --directory /build
+RUN $HOME/.meteor/meteor build --directory /build --allow-superuser
 
 
 RUN cd node_modules/fibers; node build.js; rm -rf /home/wekan/app_build/bundle/programs/web.browser.legacy
@@ -41,7 +47,7 @@ RUN cd node_modules/fibers; node build.js; rm -rf /home/wekan/app_build/bundle/p
 WORKDIR /build/bundle/programs/server
 
 # Install server dependencies
-RUN npm install -g --omit=dev
+RUN npm install -g --production
 
 RUN mkdir /data
 RUN chown wekan --recursive /data
