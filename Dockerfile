@@ -1,88 +1,76 @@
+FROM scratch AS downloads
+
+# Download NodeJS bundle
+ADD https://nodejs.org/download/release/v14.21.3/node-v14.21.3-linux-x64.tar.gz node.tar.gz
+
+# Download Meteor bundle
+ADD https://static.meteor.com/packages-bootstrap/2.16/meteor-bootstrap-os.linux.x86_64.tar.gz meteor.tar.gz
+
 FROM ubuntu:24.04 AS build
 
-# Add binaries of NodeJS from the official archive
-ADD https://nodejs.org/download/release/v14.21.3/node-v14.21.3-linux-x64.tar.gz /tmp/node.tar.gz
-RUN tar xzf /tmp/node.tar.gz --strip-components=1 --keep-old-files --no-same-owner
+# Install node from official archive
+RUN --mount=type=bind,from=downloads,source=node.tar.gz,target=node.tar.gz \
+    tar xzf node.tar.gz --strip-components=1 --keep-old-files --no-same-owner
 
-# Install meteor globally
-ADD https://static.meteor.com/packages-bootstrap/3.0.4/meteor-bootstrap-os.linux.x86_64.tar.gz /tmp/meteor.tar.gz
-RUN tar xzf /tmp/meteor.tar.gz -C $HOME --no-same-owner
+# Install meteor from official archive
+RUN --mount=type=bind,from=downloads,source=meteor.tar.gz,target=meteor.tar.gz \
+    tar xzf meteor.tar.gz -C $HOME --no-same-owner
 
 # Update the npm version
-RUN npm install -g npm@v8.19.4
+RUN npm install -g npm@6.14.17
 
 # Install several build dependencies
 RUN apt update && \
-    apt install --yes --no-install-suggests --no-install-recommends ssh git g++ curl && \
+    apt install --yes --no-install-suggests --no-install-recommends ssh git g++ curl ca-certificates && \
     rm -r /var/lib/apt/lists
 
 # Change to temporary working directory
-WORKDIR /tmp
+WORKDIR /workdir
 
 # Copy package.json and package-lock.json to install application dependencies
 COPY package.json .
 COPY package-lock.json .
 
-# Install application dependencies
-RUN npm install -g --omit=dev
+# Install build dependencies
+RUN $HOME/.meteor/meteor npm install --production
 
 # Copy meteor application configurations
 COPY .meteor .meteor
 
 # Copy application sources
 COPY packages packages
-COPY client client
-COPY server server
+COPY imports imports
 COPY config config
 COPY models models
 COPY public public
+COPY server server
+COPY client client
 
 # Build the application
-RUN $HOME/.meteor/meteor npm install -g --production
 RUN $HOME/.meteor/meteor build --directory /build --allow-superuser
 
-
-RUN cd node_modules/fibers; node build.js; rm -rf /home/wekan/app_build/bundle/programs/web.browser.legacy
-
-# Change to server directory and build server
+# Enter server bundle directory
 WORKDIR /build/bundle/programs/server
 
 # Install server dependencies
-RUN npm install -g --production
+RUN $HOME/.meteor/meteor npm install --production
 
-RUN mkdir /data
-RUN chown wekan --recursive /data
+# Enter installation directory of fibers
+WORKDIR /build/bundle/programs/server/node_modules/fibers
 
-USER wekan
+# Build fibers integrations
+RUN node build.js
 
-ENV PORT=8080
-EXPOSE $PORT
+FROM ubuntu:24.04 AS wekan
 
-STOPSIGNAL SIGKILL
-WORKDIR /home/wekan/app
-
-#---------------------------------------------------------------------
-# https://github.com/wekan/wekan/issues/3585#issuecomment-1021522132
-# Add more Node heap:
-#   NODE_OPTIONS="--max_old_space_size=4096"
-# Add more stack:
-#   bash -c "ulimit -s 65500; exec node --stack-size=65500 main.js"
-#---------------------------------------------------------------------
-#
-# CMD ["node", "/build/main.js"]
-# CMD ["bash", "-c", "ulimit -s 65500; exec node --stack-size=65500 /build/main.js"]
-# CMD ["bash", "-c", "ulimit -s 65500; exec node --stack-size=65500 --max-old-space-size=8192 /build/main.js"]
-
-FROM ubuntu:24.04
-
+# Add metadata to image
 LABEL maintainer="wekan"
 LABEL org.opencontainers.image.ref.name="ubuntu"
-LABEL org.opencontainers.image.version="24.10"
+LABEL org.opencontainers.image.version="24.04"
 LABEL org.opencontainers.image.source="https://github.com/wekan/wekan"
 
-
-ENV SRC_PATH=./ \
-    WITH_API=true \
+# Set default environment variables
+ENV WITH_API=true \
     RESULTS_PER_PAGE="" \
     DEFAULT_BOARD_ID="" \
     ACCOUNTS_LOCKOUT_KNOWN_USERS_FAILURES_BEFORE=3 \
@@ -215,6 +203,35 @@ ENV SRC_PATH=./ \
     WRITABLE_PATH=/data \
     S3=""
 
-COPY --from=build /build /build
+# Install node and application sources from build stage
+RUN --mount=type=bind,from=downloads,source=node.tar.gz,target=node.tar.gz \
+    --mount=type=bind,from=build,source=/build,target=/build \
+    # Install NodeJS
+    tar xzf node.tar.gz --strip-components=1 --keep-old-files --no-same-owner && \
+    # Add the wekan user
+    useradd --uid 999 --user-group --system wekan && \
+    # Copy wekan bundle
+    cp -r /build/bundle /wekan && \
+    # Remove the web.browser.legacy platform
+    rm -r /wekan/programs/web.browser.legacy && \
+    # Change ownership of wekan directory
+    chown wekan:wekan -R /wekan
 
-CMD ["bash", "-c", "ulimit -s 65500; exec node /build/main.js"]
+# Change to the wekan user
+USER wekan
+
+# Set the port to listen on
+ENV PORT=8080
+EXPOSE ${PORT}
+
+# Set the maximum stack size
+ENV STACK_SIZE=65500
+
+# Define the stop signal for node
+STOPSIGNAL SIGINT
+
+# Declare a volume on /data
+VOLUME /data
+
+# Set startup command
+CMD ["bash", "-c", "ulimit -s ${STACK_SIZE} && exec node /wekan/main.js"]
