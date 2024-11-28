@@ -4224,11 +4224,11 @@ THEME - Clean Light
 	background-color: var(--passive) !important;
 }
 
-.board-color-autolite .list, .board-color-autolite .board-canvas, .board-color-autolite .board-sidebar {
+.board-color-autolite .list, .board-color-autolite .board-canvas {
 	background-color: var(--theme);
 }
 
-.board-color-autolite .tabs-list .tab-item.active {
+.board-color-autolite .tabs-list .tab-item.active, .board-color-autolite .board-sidebar {
 	background-color: var(--passive);
 }
 
