@@ -4254,7 +4254,7 @@ THEME - Clean Light
 
 .board-color-autolite .minicard-description {
 	font-style: italic;
-	background-color: transparent;
+	background-color: transparent !important;
 }
 
 .board-color-autolite .minicard-details-menu {
@@ -4273,7 +4273,7 @@ THEME - Clean Light
 	border-style: solid;
 	border-color: var(--active);
 	border-radius: 0.5rem;
-	background: linear-gradient(135deg, var(--passive), var(--active));
+	background: linear-gradient(135deg, var(--passive), var(--active)) !important;
 }
 
 .board-color-autolite .card-details {
