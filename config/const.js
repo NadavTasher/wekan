@@ -18,8 +18,7 @@ export const ALLOWED_BOARD_COLORS = [
   'exodark',
   'cleandark',
   'cleanlight',
-  'night',
-  'day',
+  'autolite',
 ];
 export const ALLOWED_COLORS = [
   'white',

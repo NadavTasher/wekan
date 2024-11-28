@@ -4183,3 +4183,187 @@ THEME - Clean Light
 }
 
 /* === END CleanDark/Light THEME === */
+
+/* === START autolite THEME === */
+
+@media (prefers-color-scheme: dark) {
+	:root {
+		--bar: #15202a;
+		--text: #ebebeb;
+		--theme: #0f172a;
+		--active: #3d4a65;
+		--passive: #1e293b;
+	}
+}
+
+@media (prefers-color-scheme: light) {
+	:root {
+		--bar: #c8c8c8;
+		--text: #656565;
+		--theme: #f1f1f1;
+        --active: #e7e7e7;
+        --passive: #c5c5c5;
+	}
+}
+
+.board-color-autolite *, .board-color-autolite a {
+	color: var(--text) !important;
+	scrollbar-width: none;
+}
+
+.board-color-autolite .datepicker * {
+	color: var(--text) !important;
+	border-radius: 0;
+}
+
+.board-color-autolite table, .board-color-autolite tr {
+    background-color: var(--active) !important;
+}
+
+.board-color-autolite td:hover {
+	background-color: var(--passive) !important;
+}
+
+.board-color-autolite .list, .board-color-autolite .board-canvas, .board-color-autolite .board-sidebar {
+	background-color: var(--theme);
+}
+
+.board-color-autolite .tabs-list .tab-item.active {
+	background-color: var(--passive);
+}
+
+.board-color-autolite .list-header {
+	background-color: transparent;
+}
+
+.board-color-autolite .list-header, .board-color-autolite .list {
+	border: none;
+}
+
+.board-color-autolite .card-label.add-label {
+    box-shadow: none;
+    border-width: 2px;
+    border-style: solid;
+    border-color: var(--active);
+    border-radius: 0.2rem;
+}
+
+.board-color-autolite .card-label.add-label:hover {
+    border-style: dashed;
+}
+
+.board-color-autolite .minicard-description {
+	font-style: italic;
+	background-color: transparent;
+}
+
+.board-color-autolite .minicard-details-menu {
+	padding: 0.4rem;
+}
+
+.board-color-autolite .minicard {
+	border-width: 0 !important;
+}
+
+.board-color-autolite .minicard, .board-color-autolite .minicard:hover, .board-color-autolite.pop-over, .board-color-autolite .card-details {
+	margin: 0.3rem;
+	padding: 0.5rem;
+	box-shadow: none;
+	border-width: 1px;
+	border-style: solid;
+	border-color: var(--active);
+	border-radius: 0.5rem;
+	background: linear-gradient(135deg, var(--passive), var(--active));
+}
+
+.board-color-autolite .card-details {
+	box-sizing: content-box;
+	top: 5vh;
+	bottom: 5vh;
+	z-index: 9001;
+}
+
+.board-color-autolite .card-details-canvas {
+	padding: 0;
+}
+
+.board-color-autolite .card-details-header {
+	margin: 0;
+	padding: 0;
+	position: unset;
+	border-bottom: none;
+}
+
+.board-color-autolite.pop-over a:not(.disabled):hover {
+	color: var(--active) !important;
+	background-color: transparent;
+}
+
+.board-color-autolite.pop-over .header, .board-color-autolite .card-details-header {
+	background-color: transparent;
+}
+
+
+.board-color-autolite .card-details-left, .board-color-autolite .card-details-right {
+	padding: 0.3rem;
+	border: none;
+}
+
+.board-color-autolite input:focus, .board-color-autolite input:hover {
+	box-shadow: none;
+	border-top-color: var(--passive);
+	border-bottom-color: var(--text);
+	background-color: var(--passive) !important;
+}
+
+.board-color-autolite .minicard-wrapper {
+	margin: 0;
+}
+
+.board-color-autolite .list-body, .board-color-autolite .list-header-menu a {
+	padding: 0;
+}
+
+.board-color-autolite input, .board-color-autolite button, .board-color-autolite select, .board-color-autolite textarea, .board-color-autolite .open-minicard-composer {
+	margin: 0.3rem;
+	padding: 0.5rem;
+	border-radius: 0.5rem;
+	background: transparent;
+	background-color: transparent;
+}
+
+.board-color-autolite button:hover, .board-color-autolite select:hover, .board-color-autolite .open-minicard-composer:hover {
+	background-color: var(--active);
+}
+
+.board-color-autolite button, .board-color-autolite select, .board-color-autolite .open-minicard-composer {
+	border-width: 1px;
+	border-style: solid;
+	border-color: var(--active);
+}
+
+.board-color-autolite .open-minicard-composer {
+	text-align: center;
+}
+
+.board-color-autolite input, .board-color-autolite textarea {
+	border-style: solid;
+	border-width: 0.2rem 0;
+	border-top-color: var(--passive);
+	border-bottom-color: var(--active);
+	background-color: var(--passive);
+}
+
+.board-color-autolite .board-canvas .board-overlay {
+	opacity: 1;
+	animation: none;
+	background: transparent;
+	backdrop-filter: blur(1rem);
+	z-index: 9000;
+}
+
+#header-quick-access.board-color-autolite, #header.board-color-autolite, .board-color-autolite .swimlane, .board-color-autolite .swimlane-header {
+	background-color: var(--bar);
+}
+
+/* === END autolite THEME === */
