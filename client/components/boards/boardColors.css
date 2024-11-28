@@ -4290,8 +4290,8 @@ THEME - Clean Light
 .board-color-autolite .card-details-header {
 	margin: 0;
 	padding: 0;
-	position: unset;
-	border-bottom: none;
+	position: unset !important;
+	border-bottom: none !important;
 }
 
 .board-color-autolite.pop-over a:not(.disabled):hover {
@@ -4300,7 +4300,7 @@ THEME - Clean Light
 }
 
 .board-color-autolite.pop-over .header, .board-color-autolite .card-details-header {
-	background-color: transparent;
+	background-color: transparent !important;
 }
 
 
