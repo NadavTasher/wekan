@@ -75,7 +75,6 @@ AccountsTemplates.configure({
   defaultContentRegion: 'content',
   confirmPassword: true,
   enablePasswordChange: true,
-  sendVerificationEmail: true,
   showForgotPasswordLink: !disableForgotPassword,
   forbidClientAccountCreation: disableRegistration,
   onLogoutHook() {

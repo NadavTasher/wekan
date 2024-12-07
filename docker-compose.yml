@@ -119,7 +119,7 @@ services:
     # image: wekanteam/wekan:v6.89
     # b) GitHub Container registry.
     # b1) Latest release tag:
-    image: ghcr.io/wekan/wekan:latest
+    # image: ghcr.io/wekan/wekan:latest
     # b2) Newest git commit automatic build:
     #image: ghcr.io/wekan/wekan:main
     # c) Quay:
@@ -141,9 +141,9 @@ services:
     #-------------------------------------------------------------------------------------
     # ==== BUILD wekan-app DOCKER CONTAINER FROM SOURCE, if you uncomment these ====
     # ==== and use commands: docker compose up -d --build
-    #build:
-    #  context: .
-    #  dockerfile: Dockerfile
+    build:
+     context: .
+     dockerfile: Dockerfile
     #-------------------------------------------------------------------------------------
     ports:
       # Docker outsideport:insideport. Do not add anything extra here.
@@ -271,6 +271,7 @@ services:
       # https://docs.meteor.com/api/accounts-multi.html#AccountsCommon-config
       # Defaults below. Uncomment to change. wekan/server/accounts-common.js
       # - ACCOUNTS_COMMON_LOGIN_EXPIRATION_IN_DAYS=90
+      - ACCOUNTS_SEND_VERIFICATION_EMAIL=true
       #---------------------------------------------------------------
       # ==== RICH TEXT EDITOR IN CARD COMMENTS ====
       # https://github.com/wekan/wekan/pull/2560
