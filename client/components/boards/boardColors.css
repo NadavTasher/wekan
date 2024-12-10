@@ -4183,3 +4183,136 @@ THEME - Clean Light
 }
 
 /* === END CleanDark/Light THEME === */
+
+/* ========== CONCEPT THEME ========== */
+
+@media (prefers-color-scheme: dark) {
+	:root {
+    --header-top: #171821;
+    --header-bottom: #22252f;
+    --background-top: #3a3a3a;
+    --background-bottom: #000000;
+    --item-left: #424c60;
+    --item-right: #090f18;
+    --text: #FFFFFF;
+    --border: #6e6e6e;
+    --active: #7181a1;
+	}
+}
+
+@media (prefers-color-scheme: light) {
+	:root {
+		--text: #656565;
+		--theme: #f1f1f1;
+		--active: #c1c1c1;
+		--passive: #ffffff;
+	}
+}
+
+.board-color-concept {
+  * {
+    color: var(--text);
+
+    scrollbar-width: none;
+  }
+
+  .list, .swimlane {
+    background: transparent;
+  }
+
+  .board-canvas {
+    background: linear-gradient(135deg, var(--background-top), var(--background-bottom));
+
+    .board-overlay {
+      opacity: 1;
+      background: transparent;
+      backdrop-filter: blur(1rem);
+    }
+  }
+
+  &#header, &#header-quick-access {
+    z-index: unset;
+  }
+
+  &#header #header-main-bar {
+    height: auto;
+    display: flow-root;
+  }
+
+  #header-main-bar {
+    background: var(--header-bottom);
+  }
+
+  &#header, &#header-quick-access, .list-header {
+    background: var(--header-top);
+  }
+
+  .list {
+    border: none;
+
+    .list-body {
+      padding: 0;
+    }
+  }
+
+  &.pop-over, .minicard, .list-header, .card-details {
+    margin: 0.3rem;
+    padding: 0.6rem;
+
+    box-shadow: none;
+
+    border-width: 0;
+    border-radius: 0.5rem;
+  }
+
+  .minicard-wrapper {
+    margin: 0;
+    padding: 0;
+  }
+
+  &.pop-over {
+    background: linear-gradient(90deg, var(--header-top), var(--header-bottom));
+
+    .header {
+      background: transparent;
+    }
+
+    .content-container {
+      .content {
+        width: auto;
+        float: unset;
+
+        padding: 0;
+      }
+    }
+  }
+
+  .minicard, .minicard:hover:not(.minicard-composer) {
+    background: linear-gradient(135deg, var(--item-left), var(--item-right));
+  }
+
+  .card-details {
+    top: 2rem;
+    bottom: 2rem;
+
+    background: linear-gradient(50deg, var(--background-top), var(--background-bottom));
+
+    .card-details-item-title {
+      color: var(--text);
+    }
+
+    .card-details-header {
+      background: transparent;
+    }
+
+    .card-details-canvas {
+      padding: 0.2rem;
+    }
+  }
+
+  .swimlane {
+    .swimlane-header-wrap {
+      background: transparent;
+    }
+  }
+}
