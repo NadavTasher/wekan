@@ -18,6 +18,7 @@ export const ALLOWED_BOARD_COLORS = [
   'exodark',
   'cleandark',
   'cleanlight',
+  'concept',
 ];
 export const ALLOWED_COLORS = [
   'white',
