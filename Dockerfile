@@ -1,10 +1,10 @@
 FROM scratch AS downloads
 
 # Download NodeJS bundle
-ADD https://static.meteor.com/dev-bundle-node-os/v14.21.4/node-v14.21.4-linux-x64.tar.gz node.tar.gz
+ADD https://nodejs.org/download/release/v22.9.0/node-v22.9.0-linux-x64.tar.gz node.tar.gz
 
 # Download Meteor bundle
-ADD https://static.meteor.com/packages-bootstrap/2.16/meteor-bootstrap-os.linux.x86_64.tar.gz meteor.tar.gz
+ADD https://static.meteor.com/packages-bootstrap/3.0.4/meteor-bootstrap-os.linux.x86_64.tar.gz meteor.tar.gz
 
 FROM ubuntu:24.04 AS build
 
@@ -15,9 +15,6 @@ RUN --mount=type=bind,from=downloads,source=node.tar.gz,target=node.tar.gz \
 # Install meteor from official archive
 RUN --mount=type=bind,from=downloads,source=meteor.tar.gz,target=meteor.tar.gz \
     tar xzf meteor.tar.gz -C $HOME --no-same-owner
-
-# Update the npm version
-RUN npm install -g npm@6.14.17
 
 # Install several build dependencies
 RUN apt update && \
@@ -32,7 +29,7 @@ COPY package.json .
 COPY package-lock.json .
 
 # Install build dependencies
-RUN $HOME/.meteor/meteor npm install --production
+RUN $HOME/.meteor/meteor npm install --production --allow-superuser
 
 # Copy meteor application configurations
 COPY .meteor .meteor
